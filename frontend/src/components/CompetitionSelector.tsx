@@ -22,7 +22,7 @@ export function CompetitionSelector({ onSelect, selectedCompetition, isLoading }
           disabled={isLoading}
           className={`px-4 py-2 rounded-md font-semibold transition-colors duration-200 
             ${selectedCompetition === comp.id
-              ? 'bg-blue-800 text-white'
+              ? 'bg-purple-800 text-white'
               : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }
             ${isLoading ? 'cursor-not-allowed opacity-50' : ''}

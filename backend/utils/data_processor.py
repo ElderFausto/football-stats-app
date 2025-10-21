@@ -15,6 +15,7 @@ def process_standings_data(api_data: dict):
 
         team_dict = {
             "posicao": row.get("position"),
+            "time_id": team_info.get("id"),
             "escudo": team_info.get("crest"),
             "time": team_info.get("name"),
             "pontos": row.get("points"),
