@@ -1,9 +1,12 @@
-# Football Stats API
+# Football Stats Dashboard
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110-green.svg)](https://fastapi.tiangolo.com/)
-[![Pandas](https://img.shields.io/badge/Pandas-2.2-blueviolet.svg)](https://pandas.pydata.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-5-purple.svg)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3-38B2AC.svg)](https://tailwindcss.com/)
+
 
 <img width="1031" height="839" alt="image" src="https://github.com/user-attachments/assets/35ffddf8-0f34-479a-9ef8-8b14a6a2aba9" />
 <img width="1031" height="839" alt="image" src="https://github.com/user-attachments/assets/604b8ed0-9bb0-4f60-918e-07891d55c954" />
@@ -11,70 +14,95 @@
 <img width="1029" height="493" alt="image" src="https://github.com/user-attachments/assets/d86aa968-369f-4829-8003-4ae6106e5eb5" />
 <img width="1004" height="473" alt="image" src="https://github.com/user-attachments/assets/bf1fa098-d0d0-4631-99cc-f0780792d099" />
 
+Um painel de estatísticas de futebol full-stack que une a análise de dados com a paixão por esportes. A aplicação exibe classificações, resultados, próximos jogos e detalhes de times de diversos campeonatos, utilizando uma arquitetura moderna com backend em Python (FastAPI) e frontend em React (Vite).
 
+## 🏛️ Arquitetura do Projeto
 
-Esta é uma API de backend construída com **Python** e **FastAPI** que atua como um intermediário seguro e inteligente para a API do `football-data.org`. Ela busca dados brutos de futebol, os processa, limpa e os serve em um formato simples e pronto para consumo por qualquer cliente frontend.
+Este projeto foi construído seguindo o padrão **Backend for Frontend (BFF)**, uma arquitetura que garante segurança, performance e organização:
 
-## 🏛️ Arquitetura e Propósito
+1.  **Frontend (React):** A interface do usuário, responsável apenas pela apresentação dos dados. Ela faz chamadas exclusivamente para a nossa API de backend.
+2.  **Backend (Python/FastAPI):** Atua como um intermediário inteligente. Ele guarda a chave secreta da API externa, busca os dados brutos, os processa e formata usando **Pandas**, e os serve de forma limpa e paginada para o frontend.
+3.  **API Externa (`football-data.org`):** A fonte de dados original.
 
-O principal objetivo desta API é atuar como um **Backend for Frontend (BFF)**, seguindo as melhores práticas de segurança e eficiência:
-
-1.  **Segurança de API Keys:** A chave secreta da API do `football-data.org` é armazenada de forma segura no servidor e nunca é exposta ao cliente, protegendo-a contra uso indevido.
-2.  **Processamento de Dados no Servidor:** A lógica de limpeza, formatação e paginação dos dados é feita aqui, utilizando a biblioteca **Pandas**. Isso reduz a carga de processamento no frontend e garante que os dados enviados sejam leves e estruturados.
-3.  **Interface Simplificada:** Oferece endpoints simples e diretos para o frontend, abstraindo a complexidade da API externa.
+Essa abordagem protege a chave da API, reduz a carga de processamento no navegador e otimiza a quantidade de dados trafegados.
 
 ## 🚀 Funcionalidades Principais
 
--   **Proxy Seguro:** Centraliza todas as chamadas para a API externa, gerenciando a autenticação com a `X-Auth-Token`.
--   **Processamento de Dados com Pandas:** Transforma respostas JSON complexas e aninhadas em listas de dados limpas e "achatadas" (`flat`), ideais para renderização em tabelas e listas.
--   **Paginação no Backend:** Implementa a lógica de paginação para as listas de partidas, enviando para o cliente apenas os 20 itens da página solicitada, garantindo performance.
--   **Documentação Automática:** Graças ao FastAPI, a API é 100% autodocumentada. Acesse a documentação interativa em `/docs`.
+### Backend
+-   **Proxy Seguro:** Centraliza todas as chamadas para a API externa, gerenciando a autenticação com a `X-Auth-Token` de forma segura.
+-   **Processamento de Dados com Pandas:** Transforma respostas JSON complexas e aninhadas em listas de dados limpas e prontas para o consumo.
+-   **Paginação no Servidor:** Implementa a lógica de paginação para as listas de partidas, garantindo que o frontend carregue os dados de forma eficiente.
+-   **Documentação Automática:** Graças ao FastAPI, a API é 100% autodocumentada com Swagger UI, disponível em `/docs`.
 
-## 🛠️ Tecnologias Utilizadas
+### Frontend
+-   **Arquitetura Multi-Página:** Utiliza **React Router** para uma navegação fluida entre a página principal e as páginas de detalhes de cada time.
+-   **Roteamento Dinâmico:** Implementa rotas com parâmetros (`/team/:teamId`) para buscar e renderizar conteúdo específico.
+-   **Interface com Abas e Paginação:** Permite que o usuário explore diferentes conjuntos de dados (Classificação, Resultados, Próximos Jogos) com controles de paginação.
+-   **UX Profissional:** Exibe um **Skeleton Loader** animado enquanto os dados são buscados, melhorando drasticamente a percepção de performance.
+-   **Design Moderno com Tailwind CSS:** Totalmente estilizado com Tailwind CSS para uma interface customizada, responsiva e profissional.
 
--   **Python 3.10+**
--   **FastAPI:** Framework web moderno e de alta performance para a construção da API.
--   **Uvicorn:** Servidor ASGI para rodar a aplicação FastAPI.
--   **Pandas:** Para manipulação e processamento de dados.
--   **Requests:** Para fazer as requisições HTTP para a API externa.
--   **Python-dotenv:** Para gerenciar variáveis de ambiente e segredos.
+## 🛠️ Stack Tecnológico
 
-## 📄 Endpoints da API
+| Área | Tecnologia | Propósito |
+| :--- | :--- | :--- |
+| **Backend** | Python 3.10+ | Linguagem principal |
+| | FastAPI | Framework web para a construção da API |
+| | Pandas | Análise e processamento de dados |
+| | Requests | Requisições HTTP para a API externa |
+| | Python-dotenv | Gerenciamento de segredos (API Key) |
+| **Frontend**| React 18 | Biblioteca para a construção da UI |
+| | Vite | Ferramenta de build e desenvolvimento |
+| | TypeScript | Tipagem estática para o JavaScript |
+| | React Router | Roteamento e navegação |
+| | Tailwind CSS | Estilização da interface |
+| | Axios | Requisições HTTP para o backend |
 
--   `GET /api/standings/{competition_code}`: Retorna a tabela de classificação de um campeonato.
--   `GET /api/matches/{competition_code}`: Retorna as partidas de um campeonato. Aceita o parâmetro de query `?status=SCHEDULED|FINISHED`.
--   `GET /api/teams/{team_id}`: Retorna os detalhes de um time específico, incluindo o elenco.
+## ⚙️ Como Executar o Projeto Localmente
 
-## ⚙️ Como Executar o Projeto
+Siga os passos abaixo para rodar a aplicação completa na sua máquina.
 
-1.  **Pré-requisitos:**
-    -   Python 3.10 ou superior.
-    -   Obtenha uma chave de API gratuita em [football-data.org](https://www.football-data.org/).
+### Pré-requisitos
+-   Python 3.10 ou superior
+-   Node.js e npm
+-   Git
+-   Uma chave de API gratuita do [football-data.org](https://www.football-data.org/)
 
-2.  **Clone o repositório e navegue até a pasta `backend`:**
-    ```bash
-    git clone [https://github.com/seu-usuario/football-stats-app.git](https://github.com/seu-usuario/football-stats-app.git)
-    cd football-stats-app/backend
-    ```
+### 1. Backend
 
-3.  **Crie e ative um ambiente virtual:**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
+Primeiro, inicie o servidor da API.
 
-4.  **Instale as dependências:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+```bash
+# Clone o repositório
+git clone [https://github.com/seu-usuario/football-stats-app.git](https://github.com/seu-usuario/football-stats-app.git)
+cd football-stats-app/backend
 
-5.  **Configure suas credenciais:**
-    -   Crie um arquivo chamado `.env` na pasta `backend`.
-    -   Adicione sua chave de API nele: `FOOTBALL_DATA_API_KEY=sua_chave_aqui`.
+# Crie e ative o ambiente virtual
+python3 -m venv venv
+source venv/bin/activate
 
-6.  **Execute o servidor:**
-    ```bash
-    python3 -m uvicorn main:app --reload
-    ```
+# Instale as dependências
+pip install -r requirements.txt
 
-7.  A API estará disponível em `http://localhost:8000`.
+# Crie o arquivo .env e adicione sua chave
+echo "FOOTBALL_DATA_API_KEY=sua_chave_aqui" > .env
+
+# Inicie o servidor
+python3 -m uvicorn main:app --reload
+```
+✅ O backend estará rodando em `http://localhost:8000`. Deixe este terminal aberto.
+
+### 2. Frontend
+
+Agora, em um **novo terminal**, inicie a interface do usuário.
+
+```bash
+# Navegue até a pasta do frontend
+cd football-stats-app/frontend
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
+npm run dev
+```
+✅ A aplicação estará disponível em `http://localhost:5173`.
