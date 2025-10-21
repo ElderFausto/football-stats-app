@@ -17,3 +17,7 @@ export const getStandings = (competitionCode: string) => {
 export const getTeamDetails = (teamId: string) => {
   return apiClient.get(`/teams/${teamId}`);
 };
+
+export const getMatches = (competitionCode: string, status: 'SCHEDULED' | 'FINISHED') => {
+  return apiClient.get(`/matches/${competitionCode}`, { params: { status } });
+};
