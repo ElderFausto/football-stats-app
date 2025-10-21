@@ -1,7 +1,7 @@
 import os
 import requests
 from dotenv import load_dotenv
-from utils.data_processor import process_standings_data
+from utils.data_processor import process_standings_data, process_team_details_data
 
 load_dotenv()
 
@@ -31,4 +31,22 @@ def get_standings(competition_code: str):
 
     except requests.exceptions.RequestException as e:
         print(f"Erro ao buscar dados da API: {e}")
+        return None
+
+def get_team_details(team_id: int):
+    
+    url = f"{BASE_URL}teams/{team_id}"
+
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+
+        raw_data = response.json()
+
+        processed_data = process_team_details_data(raw_data)
+
+        return processed_data
+
+    except requests.exceptions.RequestException as e:
+        print(f"Erro ao buscar detalhes do time: {e}")
         return None
