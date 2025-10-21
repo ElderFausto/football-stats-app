@@ -1,12 +1,13 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+
+from services.football_service import get_standings
 
 app = FastAPI()
 
-# CORS
 origins = [
-    "http://localhost:3000", # React
-    "http://localhost:5173", # Vite
+    "http://localhost:3000",
+    "http://localhost:5173",
 ]
 
 app.add_middleware(
@@ -17,8 +18,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-# Cria primeiro endpoint na raiz ("/") da API
 @app.get("/")
 def read_root():
     return {"message": "Bem-vindo à API de Estatísticas de Futebol!"}
+
+@app.get("/api/standings/{competition_code}")
+async def fetch_standings(competition_code: str):
+    data = get_standings(competition_code)
+    if data is None:
+        raise HTTPException(status_code=500, detail="Não foi possível buscar os dados do campeonato.")
+    return data
