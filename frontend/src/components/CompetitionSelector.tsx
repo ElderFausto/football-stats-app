@@ -1,9 +1,12 @@
 // Define os campeonatos que queremos exibir
 const competitions = [
   { id: 'BSA', name: 'Brasileirão' },
-  { id: 'PL', name: 'Premier League' },
+  { id: 'BL1', name: 'Bundesliga' },
   { id: 'CL', name: 'Champions League' },
   { id: 'PD', name: 'La Liga' },
+  { id: 'FL1', name: 'Ligue 1' },
+  { id: 'PL', name: 'Premier League' },
+  { id: 'SA', name: 'Serie A' },
 ];
 
 interface CompetitionSelectorProps {
