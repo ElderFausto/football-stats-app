@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Optional
 
-from services.football_service import get_standings, get_team_details
+from services.football_service import get_standings, get_team_details, get_matches
 
 app = FastAPI()
 
@@ -34,4 +35,11 @@ async def fetch_team_details(team_id: int):
     data = get_team_details(team_id)
     if data is None:
         raise HTTPException(status_code=500, detail="Não foi possível buscar os detalhes do time.")
+    return data
+
+@app.get("/api/matches/{competition_code}")
+async def fetch_matches(competition_code: str, status: Optional[str] = None):
+    data = get_matches(competition_code, status)
+    if data is None:
+        raise HTTPException(status_code=500, detail="Não foi possível buscar as partidas.")
     return data

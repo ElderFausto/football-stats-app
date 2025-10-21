@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 
 def process_standings_data(api_data: dict):
    
@@ -62,3 +63,42 @@ def process_team_details_data(api_data: dict):
     }
 
     return processed_data
+
+def format_date(date_string: str):
+    if not date_string:
+        return {"data": "A definir", "hora": ""}
+
+    # Converte a string ISO (ex: '2025-10-21T22:00:00Z') para um objeto datetime
+    dt_object = datetime.fromisoformat(date_string.replace('Z', '+00:00'))
+    return {
+        "data": dt_object.strftime('%d/%m/%Y'),
+        "hora": dt_object.strftime('%H:%M')
+    }
+    
+def process_matches_data(api_data: dict):
+    """Processa os dados brutos de partidas."""
+    clean_data = []
+    for match in api_data.get("matches", []):
+        match_dict = {
+            "id": match.get("id"),
+            "dataHora": format_date(match.get("utcDate")),
+            "status": match.get("status"),
+            "rodada": match.get("matchday"),
+            "timeCasa": {
+                "id": match.get("homeTeam", {}).get("id"),
+                "nome": match.get("homeTeam", {}).get("name"),
+                "escudo": match.get("homeTeam", {}).get("crest")
+            },
+            "timeFora": {
+                "id": match.get("awayTeam", {}).get("id"),
+                "nome": match.get("awayTeam", {}).get("name"),
+                "escudo": match.get("awayTeam", {}).get("crest")
+            },
+            "placar": {
+                "casa": match.get("score", {}).get("fullTime", {}).get("home"),
+                "fora": match.get("score", {}).get("fullTime", {}).get("away")
+            }
+        }
+        clean_data.append(match_dict)
+
+    return clean_data
