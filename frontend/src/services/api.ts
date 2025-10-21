@@ -18,6 +18,12 @@ export const getTeamDetails = (teamId: string) => {
   return apiClient.get(`/teams/${teamId}`);
 };
 
-export const getMatches = (competitionCode: string, status: 'SCHEDULED' | 'FINISHED') => {
-  return apiClient.get(`/matches/${competitionCode}`, { params: { status } });
+export const getMatches = (competitionCode: string, status: 'SCHEDULED' | 'FINISHED', page: number) => {
+  return apiClient.get(`/matches/${competitionCode}`, {
+    params: {
+      status,
+      page,
+      limit: 20 // O limite está fixo em 20, como definimos no backend
+    }
+  });
 };

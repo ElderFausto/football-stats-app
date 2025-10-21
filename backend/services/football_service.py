@@ -2,6 +2,7 @@ import os
 import requests
 from dotenv import load_dotenv
 from utils.data_processor import process_standings_data, process_team_details_data, process_matches_data
+import math
 
 load_dotenv()
 
@@ -51,8 +52,7 @@ def get_team_details(team_id: int):
         print(f"Erro ao buscar detalhes do time: {e}")
         return None
     
-def get_matches(competition_code: str, status: str = None):
-  
+def get_matches(competition_code: str, status: str = None, page: int = 1, limit: int = 20):
     url = f"{BASE_URL}competitions/{competition_code}/matches"
     params = {}
     if status:
@@ -63,9 +63,24 @@ def get_matches(competition_code: str, status: str = None):
         response.raise_for_status()
 
         raw_data = response.json()
-        processed_data = process_matches_data(raw_data)
+        all_matches = process_matches_data(raw_data)
 
-        return processed_data
+        # Lógica de Paginação
+        total_matches = len(all_matches)
+        total_pages = math.ceil(total_matches / limit)
+
+        # Calcula o início e o fim do "fatiamento"
+        start_index = (page - 1) * limit
+        end_index = start_index + limit
+
+        # Fatia a lista de partidas para retornar apenas a página desejada
+        paginated_matches = all_matches[start_index:end_index]
+
+        # Retorna um dicionário com os dados paginados e o total de páginas
+        return {
+            "matches": paginated_matches,
+            "totalPages": total_pages
+        }
 
     except requests.exceptions.RequestException as e:
         print(f"Erro ao buscar partidas: {e}")

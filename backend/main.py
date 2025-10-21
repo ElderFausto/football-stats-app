@@ -38,8 +38,8 @@ async def fetch_team_details(team_id: int):
     return data
 
 @app.get("/api/matches/{competition_code}")
-async def fetch_matches(competition_code: str, status: Optional[str] = None):
-    data = get_matches(competition_code, status)
+async def fetch_matches(competition_code: str, status: Optional[str] = None, page: int = 1, limit: int = 20):
+    data = get_matches(competition_code, status, page, limit)
     if data is None:
         raise HTTPException(status_code=500, detail="Não foi possível buscar as partidas.")
     return data
