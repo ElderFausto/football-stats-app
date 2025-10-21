@@ -1,6 +1,9 @@
+import { Link } from "react-router-dom";
+
 // Define o tipo para cada linha da tabela de classificação
 interface Standing {
   posicao: number;
+  time_id: number;
   escudo: string;
   time: string;
   pontos: number;
@@ -64,7 +67,9 @@ export function StandingsTable({ standings, error }: StandingsTableProps) {
                 />
               </td>
               <td className="py-3 px-2 font-medium text-slate-900">
-                {team.time}
+                <Link to={`/team/${team.time_id}`} className="hover:underline">
+                  {team.time}
+                </Link>
               </td>
               <td className="py-3 px-4 text-center font-bold text-slate-900">
                 {team.pontos}

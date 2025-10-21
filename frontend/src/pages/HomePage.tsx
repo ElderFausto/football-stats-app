@@ -35,7 +35,7 @@ export function HomePage() {
       })
       .catch(err => {
         console.error("Erro ao buscar dados:", err);
-        setError("Não foi possível carregar os dados. Verifique a API ou tente novamente.");
+        setError("Não foi possível carregar os dados. Tente novamente.");
       })
       .finally(() => {
         setIsLoading(false);

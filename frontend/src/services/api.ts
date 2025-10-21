@@ -13,3 +13,7 @@ const apiClient = axios.create({
 export const getStandings = (competitionCode: string) => {
   return apiClient.get(`/standings/${competitionCode}`);
 };
+
+export const getTeamDetails = (teamId: string) => {
+  return apiClient.get(`/teams/${teamId}`);
+};
