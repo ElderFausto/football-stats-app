@@ -3,6 +3,7 @@ import { CompetitionSelector } from "./components/CompetitionSelector";
 import { StandingsTable } from "./components/StandingsTable";
 import { getStandings } from "./services/api";
 import { SkeletonTable } from "./components/SkeletonTable";
+import { Outlet } from "react-router-dom";
 
 // Define o tipo para cada linha da tabela (pode ser movido para um arquivo de tipos no futuro)
 interface Standing {
@@ -68,18 +69,7 @@ function App() {
       </header>
 
       <main className="container mx-auto p-4 md:p-6">
-        <CompetitionSelector
-          onSelect={handleCompetitionSelect}
-          selectedCompetition={selectedCompetition}
-          isLoading={isLoading}
-        />
-
-        {/* LÓGICA DE RENDERIZAÇÃO CONDICIONAL */}
-        {isLoading ? (
-          <SkeletonTable />
-        ) : (
-          <StandingsTable standings={standings} error={error} />
-        )}
+        <Outlet />
       </main>
     </div>
   );
