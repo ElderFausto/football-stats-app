@@ -1,5 +1,6 @@
 import pandas as pd
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 def process_standings_data(api_data: dict):
    
@@ -68,12 +69,24 @@ def format_date(date_string: str):
     if not date_string:
         return {"data": "A definir", "hora": ""}
 
-    # Converte a string ISO (ex: '2025-10-21T22:00:00Z') para um objeto datetime
-    dt_object = datetime.fromisoformat(date_string.replace('Z', '+00:00'))
-    return {
-        "data": dt_object.strftime('%d/%m/%Y'),
-        "hora": dt_object.strftime('%H:%M')
-    }
+    try:
+        # 2. Define os fusos horários de UTC e São Paulo
+        utc_tz = ZoneInfo("UTC")
+        sao_paulo_tz = ZoneInfo("America/Sao_Paulo")
+
+        # Converte a string ISO para um objeto datetime ciente do fuso UTC
+        utc_dt = datetime.fromisoformat(date_string.replace('Z', '+00:00')).astimezone(utc_tz)
+        
+        # 3. Converte o objeto datetime de UTC para o fuso de São Paulo
+        local_dt = utc_dt.astimezone(sao_paulo_tz)
+
+        return {
+            "data": local_dt.strftime('%d/%m/%Y'),
+            "hora": local_dt.strftime('%H:%M')
+        }
+    except Exception:
+        return {"data": "Data inválida", "hora": ""}
+    
     
 def process_matches_data(api_data: dict):
     """Processa os dados brutos de partidas."""

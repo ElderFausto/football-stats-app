@@ -18,17 +18,18 @@ interface Match {
   placar: { casa: number | null; fora: number | null };
 }
 
+// ATUALIZAÇÃO: Propriedades de paginação agora são opcionais com '?'
 interface MatchesListProps {
   matches: Match[];
   title: string;
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (newPage: number) => void;
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange?: (newPage: number) => void;
 }
 
 export function MatchesList({ matches, title, currentPage, totalPages, onPageChange }: MatchesListProps) {
   if (matches.length === 0) {
-    return <p className="text-center text-gray-500 py-8">Nenhuma partida encontrada para esta página.</p>;
+    return <p className="text-center text-gray-500 py-8">Nenhuma partida encontrada.</p>;
   }
 
   return (
@@ -36,7 +37,6 @@ export function MatchesList({ matches, title, currentPage, totalPages, onPageCha
       <div className="bg-white rounded-lg shadow-md border border-gray-200">
         <h3 className="text-xl font-bold text-gray-800 p-4 border-b">{title}</h3>
         <div className="divide-y divide-gray-200">
-          {/* O CÓDIGO QUE FALTAVA ESTÁ AQUI */}
           {matches.map(match => (
             <div key={match.id} className="p-4 grid grid-cols-3 items-center gap-4">
               {/* Time da Casa */}
@@ -67,11 +67,14 @@ export function MatchesList({ matches, title, currentPage, totalPages, onPageCha
         </div>
       </div>
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={onPageChange}
-      />
+      {/* ATUALIZAÇÃO: A paginação só será renderizada se as props necessárias forem passadas */}
+      {currentPage && totalPages && onPageChange && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+        />
+      )}
     </>
   );
 }

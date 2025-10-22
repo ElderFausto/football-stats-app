@@ -3,6 +3,7 @@ import { CompetitionSelector } from '../components/CompetitionSelector';
 import { StandingsTable } from '../components/StandingsTable';
 import { SkeletonTable } from '../components/SkeletonTable';
 import { MatchesList } from '../components/MatchesList';
+// CORREÇÃO: Importando a função 'getMatches' em vez de 'getTeamMatches'
 import { getStandings, getMatches } from '../services/api';
 
 // --- Definindo os tipos de dados (interfaces) ---
@@ -36,11 +37,9 @@ export function HomePage() {
   const [selectedCompetition, setSelectedCompetition] = useState<string>('BSA');
   const [activeView, setActiveView] = useState<View>('standings');
 
-  // Novos estados para controlar a página atual de cada aba
   const [resultsPage, setResultsPage] = useState(1);
   const [schedulesPage, setSchedulesPage] = useState(1);
 
-  // Estados de dados atualizados para armazenar a lista de itens e o total de páginas
   const [standings, setStandings] = useState<Standing[]>([]);
   const [finishedMatches, setFinishedMatches] = useState({ matches: [] as Match[], totalPages: 1 });
   const [scheduledMatches, setScheduledMatches] = useState({ matches: [] as Match[], totalPages: 1 });
@@ -48,31 +47,30 @@ export function HomePage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // --- Efeito para Buscar Dados (Refatorado para Paginação) ---
+  // --- Efeito para Buscar Dados (Corrigido) ---
   useEffect(() => {
     setIsLoading(true);
     setError(null);
 
     let dataPromise;
 
-    // A busca de dados agora depende da aba ativa e da página correspondente
     switch (activeView) {
       case 'results':
+        // CORREÇÃO: Usando a função 'getMatches' para buscar jogos de um CAMPEONATO
         dataPromise = getMatches(selectedCompetition, 'FINISHED', resultsPage);
         break;
       case 'schedules':
+        // CORREÇÃO: Usando a função 'getMatches' para buscar jogos de um CAMPEONATO
         dataPromise = getMatches(selectedCompetition, 'SCHEDULED', schedulesPage);
         break;
       case 'standings':
       default:
-        // A busca da classificação não é paginada, então não precisa de alterações
         dataPromise = getStandings(selectedCompetition);
         break;
     }
 
     dataPromise
       .then(response => {
-        // Atualiza o estado correto com base na aba ativa
         switch (activeView) {
           case 'results':
             setFinishedMatches(response.data);
@@ -93,13 +91,11 @@ export function HomePage() {
         setIsLoading(false);
       });
       
-  // O efeito agora é acionado pela mudança de campeonato, aba ou página
   }, [selectedCompetition, activeView, resultsPage, schedulesPage]);
 
   const handleCompetitionSelect = (competitionId: string) => {
     setSelectedCompetition(competitionId);
-    setActiveView('standings'); // Sempre volta para a aba de classificação
-    // Reseta a paginação ao mudar de campeonato
+    setActiveView('standings');
     setResultsPage(1); 
     setSchedulesPage(1);
   };
@@ -139,7 +135,7 @@ export function HomePage() {
           title="Últimos Resultados"
           currentPage={resultsPage}
           totalPages={finishedMatches.totalPages}
-          onPageChange={setResultsPage} // Passa a função para mudar a página
+          onPageChange={setResultsPage}
         />;
       case 'schedules':
         return <MatchesList 
@@ -147,7 +143,7 @@ export function HomePage() {
           title="Próximos Jogos"
           currentPage={schedulesPage}
           totalPages={scheduledMatches.totalPages}
-          onPageChange={setSchedulesPage} // Passa a função para mudar a página
+          onPageChange={setSchedulesPage}
         />;
       default:
         return <StandingsTable standings={standings} error={null} />;
