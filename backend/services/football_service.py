@@ -85,3 +85,21 @@ def get_matches(competition_code: str, status: str = None, page: int = 1, limit:
     except requests.exceptions.RequestException as e:
         print(f"Erro ao buscar partidas: {e}")
         return None
+    
+def get_team_matches(team_id: int):
+
+    url = f"{BASE_URL}teams/{team_id}/matches"
+
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+
+        raw_data = response.json()
+        # Reutilizamos o mesmo processador de dados que já tínhamos!
+        processed_data = process_matches_data(raw_data)
+
+        return processed_data
+
+    except requests.exceptions.RequestException as e:
+        print(f"Erro ao buscar partidas do time: {e}")
+        return None
