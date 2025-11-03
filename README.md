@@ -7,11 +7,12 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3-38B2AC.svg)](https://tailwindcss.com/)
 
-
-<img width="1031" height="839" alt="image" src="https://github.com/user-attachments/assets/35ffddf8-0f34-479a-9ef8-8b14a6a2aba9" />
-<img width="1031" height="839" alt="image" src="https://github.com/user-attachments/assets/604b8ed0-9bb0-4f60-918e-07891d55c954" />
-<img width="1031" height="839" alt="image" src="https://github.com/user-attachments/assets/817574e3-3d28-4266-9fdf-b334c2135b5b" />
-<img width="1029" height="493" alt="image" src="https://github.com/user-attachments/assets/d86aa968-369f-4829-8003-4ae6106e5eb5" />
+<img width="1522" height="903" alt="image" src="https://github.com/user-attachments/assets/64e7ff32-d76c-467f-9ce3-73ac3cbe18f8" />
+<img width="1522" height="903" alt="image" src="https://github.com/user-attachments/assets/8fa7441e-8314-4cb0-9d12-a5c8adfec722" />
+<img width="1522" height="903" alt="image" src="https://github.com/user-attachments/assets/05ac8e73-7b6e-4cc9-9faf-f17271feef24" />
+<img width="1485" height="901" alt="image" src="https://github.com/user-attachments/assets/6c6b2981-1a3f-474c-a8a9-56dd839735b6" />
+<img width="1522" height="903" alt="image" src="https://github.com/user-attachments/assets/9dc8a691-c616-4f52-a7e4-f6b631dd29d8" />
+<img width="1522" height="903" alt="image" src="https://github.com/user-attachments/assets/94236df5-e288-46a0-9b20-4b38da94627e" />
 <img width="1004" height="473" alt="image" src="https://github.com/user-attachments/assets/bf1fa098-d0d0-4631-99cc-f0780792d099" />
 
 Um painel de estatísticas de futebol full-stack que une a análise de dados com a paixão por esportes. A aplicação exibe classificações, resultados, próximos jogos e detalhes de times de diversos campeonatos, utilizando uma arquitetura moderna com backend em Python (FastAPI) e frontend em React (Vite).
